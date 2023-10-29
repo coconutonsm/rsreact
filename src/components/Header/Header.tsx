@@ -22,7 +22,7 @@ class Header extends React.Component<props, state> {
 
   handleSubmit = () => {
     this.props.getSearchText(this.state.inputValue);
-    localStorage.setItem('searchText', this.state.inputValue);
+    localStorage.setItem('searchText', this.state.inputValue      );
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
