@@ -26,7 +26,7 @@ class Header extends React.Component<props, state> {
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
+    this.setState({ inputValue: e.target.value.trim() }   );
   };
 
   render() {
