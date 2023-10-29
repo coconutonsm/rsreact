@@ -1,25 +1,28 @@
 import React, { ChangeEvent } from 'react';
 import './header.scss';
 
-interface props {
-  getSerchText: (x: string) => void;
-}
+type props = {
+  getSearchText: (x: string) => void;
+};
 
-interface state {
+type state = {
   inputValue: string;
-}
+};
 
 class Header extends React.Component<props, state> {
   constructor(props: props) {
     super(props);
 
     this.state = {
-      inputValue: '',
+      inputValue: localStorage.getItem('searchText')?.length
+        ? String(localStorage.getItem('searchText'))
+        : '',
     };
   }
 
   handleSubmit = () => {
-    this.props.getSerchText(this.state.inputValue);
+    this.props.getSearchText(this.state.inputValue);
+    localStorage.setItem('searchText', this.state.inputValue);
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +31,14 @@ class Header extends React.Component<props, state> {
 
   render() {
     return (
-      <header>
+      <header className="header">
         <div className="search">
           <input
             type="text"
             className="searcInput"
             onChange={this.handleChange}
+            value={this.state.inputValue}
+            placeholder="Enter character name"
           />
           <button className="button" onClick={this.handleSubmit}>
             Search
