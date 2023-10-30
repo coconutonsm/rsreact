@@ -7,6 +7,7 @@ type props = {
 
 type state = {
   inputValue: string;
+  hasError: boolean;
 };
 
 class Header extends React.Component<props, state> {
@@ -17,6 +18,7 @@ class Header extends React.Component<props, state> {
       inputValue: localStorage.getItem('searchText')?.length
         ? String(localStorage.getItem('searchText'))
         : '',
+      hasError: false,
     };
   }
 
@@ -29,7 +31,15 @@ class Header extends React.Component<props, state> {
     this.setState({ inputValue: e.target.value.trim() });
   };
 
+  handleErrorSubmit = () => {
+    this.setState({ hasError: true });
+  };
+
   render() {
+    if (this.state.hasError) {
+      throw Error('Error!!');
+    }
+
     return (
       <header className="header">
         <div className="search">
@@ -42,6 +52,9 @@ class Header extends React.Component<props, state> {
           />
           <button className="button" onClick={this.handleSubmit}>
             Search
+          </button>
+          <button className="button" onClick={this.handleErrorSubmit}>
+            Throw Error
           </button>
         </div>
       </header>

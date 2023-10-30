@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ErrorInfo } from 'react';
 
 type props = {
   children: React.ReactNode;
@@ -18,9 +18,17 @@ class ErrorBoundary extends React.Component<props, state> {
     return { hasError: true };
   }
 
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('ErrorBoundary caught error: ', error.message, errorInfo);
+  }
+
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <div>
+          <h1>Something went wrong. Please reload page.</h1>
+        </div>
+      );
     }
 
     return this.props.children;
