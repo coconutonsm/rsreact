@@ -1,0 +1,16 @@
+.pagination {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  margin: 20px auto;
+
+  & button {
+    background: #fff;
+    padding: 4px 10px;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}
