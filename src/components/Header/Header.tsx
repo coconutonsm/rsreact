@@ -42,7 +42,7 @@ const Header: React.FC<props> = ({ getSearchText, setCurrentPage }) => {
           className="searcInput"
           onChange={handleChange}
           value={inputValue}
-          placeholder="Enter character name"
+          placeholder="Enter value"
         />
         <button className="button" onClick={handleSubmit}>
           Search

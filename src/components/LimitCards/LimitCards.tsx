@@ -14,7 +14,7 @@ const LimitCards: React.FC<props> = ({ setPerPage, setCurrentPage }) => {
 
   return (
     <div className="limit">
-      <span>Limit imtes:</span>
+      <span>Limit items:</span>
       <select name="select" onChange={chengeSelect}>
         <option value="8">8</option>
         <option defaultValue="12">12</option>
