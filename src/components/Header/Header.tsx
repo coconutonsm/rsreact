@@ -3,14 +3,16 @@ import './header.scss';
 
 type props = {
   getSearchText: (x: string) => void;
+  setCurrentPage: (x: number) => void;
 };
 
-const Header: React.FC<props> = ({ getSearchText }) => {
+const Header: React.FC<props> = ({ getSearchText, setCurrentPage }) => {
   const [hasError, setHasError] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleSubmit = () => {
     getSearchText(inputValue);
+    setCurrentPage(1);
     localStorage.setItem('searchText', inputValue);
   };
 

@@ -1,13 +1,13 @@
 .spinner {
   display: flex;
-  width: 150px;
-  height: 150px;
+  width: 90px;
+  height: 90px;
   justify-content: center;
   margin: 50px auto 0;
   border-radius: 50%;
   background: conic-gradient(from 180deg at 50% 50%,
       rgba(82, 0, 255, 0) 0deg,
-      #5200ff 360deg);
+      #010002 360deg);
   animation: spin 2s infinite linear;
 }
 
