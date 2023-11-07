@@ -5,8 +5,7 @@ import Card from '../components/Card/Card';
 import Preloader from '../components/Preloader/Preloader';
 import Pagination from '../components/Pagination/Pagination';
 import LimitCards from '../components/LimitCards/LimitCards';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
-import SingleCard from '../components/SingleCard/SingleCard';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { getCards } from '../services/getData';
 import { ALL_BEER, API_URL } from '../consts';
 
@@ -35,7 +34,7 @@ const App = () => {
     setIsLoading(true);
     setSearchParams({ page: String(currentPage) });
   }, [inputValue, perPage, currentPage, setSearchParams]);
-  console.log('cards.length: ', cards.length);
+
   return (
     <>
       <Header getSearchText={getSearchText} setCurrentPage={setCurrentPage} />
@@ -62,9 +61,7 @@ const App = () => {
                     />
                   ))}
               </Cards>
-              <Routes>
-                <Route path="card/:id" element={<SingleCard />} />
-              </Routes>
+              <Outlet />
             </div>
           </>
         ) : (
