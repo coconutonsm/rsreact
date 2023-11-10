@@ -35,7 +35,7 @@ export const getAllSearchCards = async (url: string) => {
       .get(url)
       .then((response) => {
         const cards: resultItem[] = response.data;
-        return cards;
+        return cards.length;
       })
       .catch((err: unknown) => {
         if (err instanceof Error) {

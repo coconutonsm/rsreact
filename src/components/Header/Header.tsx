@@ -1,23 +1,46 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './header.scss';
+import { getAllSearchCards } from '../../services/getData';
+import { API_URL } from '../../consts';
 
 type props = {
-  getSearchText: (x: string) => void;
+  setInputValue: (x: string) => void;
   setCurrentPage: (x: number) => void;
+  setCountCardsSearch: (x: number) => void;
 };
 
-const Header: React.FC<props> = ({ getSearchText, setCurrentPage }) => {
+const Header: React.FC<props> = ({
+  setInputValue,
+  setCurrentPage,
+  setCountCardsSearch,
+}) => {
   const [hasError, setHasError] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>(
+    localStorage.getItem('searchText') || ''
+  );
+
+  const setAllSearchCards = async (url: string) => {
+    if (searchText) {
+      const allItemsForSearch = await getAllSearchCards(url);
+      if (allItemsForSearch) {
+        setCountCardsSearch(allItemsForSearch);
+        console.log('allItemsForSearch: ', allItemsForSearch);
+      }
+    }
+  };
 
   const handleSubmit = () => {
-    getSearchText(inputValue);
+    setInputValue(searchText);
     setCurrentPage(1);
-    localStorage.setItem('searchText', inputValue);
+    localStorage.setItem('searchText', searchText);
+    const url = searchText
+      ? API_URL + `?beer_name=${searchText}&per_page=${80}`
+      : API_URL;
+    setAllSearchCards(url);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value.trim());
+    setSearchText(e.target.value.trim());
   };
 
   const handleErrorSubmit = () => {
@@ -25,9 +48,12 @@ const Header: React.FC<props> = ({ getSearchText, setCurrentPage }) => {
   };
 
   useEffect(() => {
-    localStorage.getItem('searchText')?.length
-      ? setInputValue(String(localStorage.getItem('searchText')))
-      : setInputValue('');
+    if (localStorage.getItem('searchText')?.length) {
+      const url = searchText
+        ? API_URL + `?beer_name=${searchText}&per_page=${80}`
+        : API_URL;
+      setAllSearchCards(url);
+    }
   }, []);
 
   if (hasError) {
@@ -41,7 +67,7 @@ const Header: React.FC<props> = ({ getSearchText, setCurrentPage }) => {
           type="text"
           className="searcInput"
           onChange={handleChange}
-          value={inputValue}
+          value={searchText}
           placeholder="Enter value"
         />
         <button className="button" onClick={handleSubmit}>

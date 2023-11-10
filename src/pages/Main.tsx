@@ -6,7 +6,7 @@ import Preloader from '../components/Preloader/Preloader';
 import Pagination from '../components/Pagination/Pagination';
 import LimitCards from '../components/LimitCards/LimitCards';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { getAllSearchCards, getCards } from '../services/getData';
+import { getCards } from '../services/getData';
 import { ALL_BEER, API_URL } from '../consts';
 
 const App = () => {
@@ -17,29 +17,14 @@ const App = () => {
   const [perPage, setPerPage] = useState<number>(8);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [cards, setCards] = useState<resultItem[]>([]);
-  const [allCardsForSearch, setAlCardsForSearch] = useState<resultItem[]>();
+  const [countCardsSearch, setCountCardsSearch] = useState<number>();
   const [, setSearchParams] = useSearchParams();
 
-  const getSearchText = (searchText: string) => {
-    setInputValue(searchText);
-  };
-
-  const setAllSearchCards = async (url: string) => {
-    const allItemsForSearch = await getAllSearchCards(url);
-    if (allItemsForSearch) {
-      setAlCardsForSearch(allItemsForSearch);
-    }
-  };
-
   useEffect(() => {
-    let url = inputValue
-      ? API_URL + `?beer_name=${inputValue}&per_page=${80}`
-      : API_URL;
-    setAllSearchCards(url);
-
-    url =
+    const url =
       API_URL +
-      `?per_page=${perPage}&page=${currentPage}${inputValue ? `&beer_name=${inputValue}` : ``
+      `?per_page=${perPage}&page=${currentPage}${
+        inputValue ? `&beer_name=${inputValue}` : ``
       }`;
 
     getCards(url, setCards, setIsLoading);
@@ -49,7 +34,11 @@ const App = () => {
 
   return (
     <>
-      <Header getSearchText={getSearchText} setCurrentPage={setCurrentPage} />
+      <Header
+        setInputValue={setInputValue}
+        setCurrentPage={setCurrentPage}
+        setCountCardsSearch={setCountCardsSearch}
+      />
       <main>
         <LimitCards setPerPage={setPerPage} setCurrentPage={setCurrentPage} />
         {!isLoading ? (
@@ -59,8 +48,8 @@ const App = () => {
               setCurrentPage={setCurrentPage}
               maxPage={Math.ceil(
                 (inputValue
-                  ? allCardsForSearch
-                    ? allCardsForSearch.length
+                  ? countCardsSearch
+                    ? countCardsSearch
                     : 0
                   : ALL_BEER) / perPage
               )}
