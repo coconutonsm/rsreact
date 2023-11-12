@@ -24,7 +24,6 @@ const Header: React.FC<props> = ({
       const allItemsForSearch = await getAllSearchCards(url);
       if (allItemsForSearch) {
         setCountCardsSearch(allItemsForSearch);
-        console.log('allItemsForSearch: ', allItemsForSearch);
       }
     }
   };
