@@ -12,9 +12,15 @@ const SingleCard: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [card, setCard] = useState<resultItem[]>([]);
 
-  useEffect(() => {
-    getCards(`${API_URL}/${id}`, setCard, setIsLoading);
+  const getSingleCard = async () => {
     setIsLoading(true);
+    const card = await getCards(`${API_URL}/${id}`);
+    setCard(card as resultItem[]);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getSingleCard();
   }, [id]);
 
   const handleClick = () => {
