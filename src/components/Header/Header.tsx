@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import './header.scss';
-import { getAllSearchCards } from '../../services/getData';
+import { getCards } from '../../services/getData';
 import { API_URL } from '../../consts';
 import { SearchContext } from '../../contexts/context';
 import { REDUCE_ACTION_TYPE } from '../../types/types';
@@ -19,9 +19,9 @@ const Header: React.FC<props> = ({ setCurrentPage, setCountCardsSearch }) => {
 
   const setAllSearchCards = async (url: string) => {
     if (searchText) {
-      const allItemsForSearch = await getAllSearchCards(url);
+      const allItemsForSearch = await getCards(url);
       if (allItemsForSearch) {
-        setCountCardsSearch(allItemsForSearch);
+        setCountCardsSearch(allItemsForSearch.length);
       }
     }
   };
