@@ -1,0 +1,21 @@
+.single_card {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    margin-top: 40px;
+  
+    &__wrapper {
+      text-align:  center;
+    }
+  
+    &__img {
+      height: 150px;
+      width: auto;
+      text-align: center;
+    }
+  
+    &__name {
+      text-align: center;
+    }
+  }
+  
