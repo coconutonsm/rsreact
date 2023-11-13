@@ -1,22 +1,22 @@
 import { createContext } from 'react';
 import {
   REDUCE_ACTION_TYPE,
-  TypeActionSeach,
+  TypeAction,
   TypeSearchState,
 } from '../types/types';
 
-export const initialStateSearch: TypeSearchState = {
+export const initialState: TypeSearchState = {
   search: localStorage.getItem('searchText') || '',
   cards: [],
   dispatch: function (): void {},
 };
 
-export const SearchContext = createContext(initialStateSearch);
+export const SearchContext = createContext(initialState);
 
 export const SearchReducer = (
   state: TypeSearchState,
-  action: TypeActionSeach
-): typeof initialStateSearch => {
+  action: TypeAction
+): typeof initialState => {
   switch (action.type) {
     case REDUCE_ACTION_TYPE.SEARCH_VALUE:
       return { ...state, search: action.payload };

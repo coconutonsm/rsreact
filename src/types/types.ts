@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 export type TypeSearchState = {
   search: string;
   cards: resultItem[];
-  dispatch: Dispatch<TypeActionSeach>;
+  dispatch: Dispatch<TypeAction>;
 };
 
 export const enum REDUCE_ACTION_TYPE {
@@ -11,7 +11,7 @@ export const enum REDUCE_ACTION_TYPE {
   CARDS_DATA,
 }
 
-export type TypeActionSeach =
+export type TypeAction =
   | {
       type: REDUCE_ACTION_TYPE.CARDS_DATA;
       payload: resultItem[];

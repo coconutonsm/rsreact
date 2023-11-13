@@ -10,7 +10,7 @@ import { getCards } from '../services/getData';
 import { ALL_BEER, API_URL } from '../consts';
 import {
   SearchReducer,
-  initialStateSearch,
+  initialState,
   SearchContext,
 } from '../contexts/context';
 import { REDUCE_ACTION_TYPE } from '../types/types';
@@ -22,10 +22,7 @@ const App = () => {
   const [countCardsSearch, setCountCardsSearch] = useState<number>();
   const [, setSearchParams] = useSearchParams();
 
-  const [{ search, cards }, dispatch] = useReducer(
-    SearchReducer,
-    initialStateSearch
-  );
+  const [{ search, cards }, dispatch] = useReducer(SearchReducer, initialState);
 
   const setCards = async (url: string) => {
     setIsLoading(true);
